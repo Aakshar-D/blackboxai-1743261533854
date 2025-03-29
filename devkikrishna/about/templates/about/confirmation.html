@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - Shree Devkikrishna Temple</title>
+    {% load static %}
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'about/images/favicon.ico' %}">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'about/css/styles.css' %}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4E00',
+                        secondary: '#FF8B00',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Booking Confirmation
+                </h2>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4 mb-8"></div>
+            </div>
+            <div class="space-y-4">
+                <div class="border-b pb-4">
+                    <p class="text-sm text-gray-500">Booking Reference</p>
+                    <p class="text-lg font-semibold">#{{ booking.id }}</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Name:</span>
+                        <span class="font-medium">{{ booking.name }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Email:</span>
+                        <span class="font-medium">{{ booking.email }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Phone:</span>
+                        <span class="font-medium">{{ booking.phone }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Room Type:</span>
+                        <span class="font-medium">{{ booking.room_type }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Check-in:</span>
+                        <span class="font-medium">{{ booking.check_in }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Check-out:</span>
+                        <span class="font-medium">{{ booking.check_out }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Guests:</span>
+                        <span class="font-medium">{{ booking.guests }}</span>
+                    </div>
+                    {% if booking.special_requests %}
+                    <div class="pt-4 border-t">
+                        <p class="text-gray-500">Special Requests:</p>
+                        <p class="mt-2 text-gray-700">{{ booking.special_requests }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mt-8">
+                <div class="text-center text-sm text-gray-500">
+                    <p>A confirmation email has been sent to {{ booking.email }}</p>
+                </div>
+                <div class="mt-6">
+                    <a href="{% url 'about:index' %}" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Return to Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
