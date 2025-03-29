@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% load static %}
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'about/images/favicon.ico' %}">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4E00',
+                        secondary: '#FF8B00',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'about/css/styles.css' %}">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg fixed w-full z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="{% static 'about/images/logo.png' %}" alt="Temple Logo" class="h-12 w-auto">
+                <h1 class="text-2xl font-bold">Shree Devkikrishna</h1>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-orange-200 transition duration-300">Home</a>
+                <a href="#about" class="hover:text-orange-200 transition duration-300">About</a>
+                <a href="#gallery" class="hover:text-orange-200 transition duration-300">Gallery</a>
+                <a href="#contact" class="hover:text-orange-200 transition duration-300">Contact</a>
+            </div>
+            <button class="bg-white text-primary px-6 py-2 rounded-full hover:bg-orange-100 transition duration-300 font-semibold">
+                DONATE
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative h-[600px] bg-black">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <img src="{% static 'about/images/temple.jpg' %}" alt="Temple" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center text-center">
+                <div class="text-white space-y-6">
+                    <h2 class="text-5xl font-bold text-shadow">{{ subtitle }}</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto"></div>
+                    <p class="text-xl max-w-2xl mx-auto">Discover the rich history and spiritual significance of our sacred temple</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <h3 class="text-3xl font-bold text-gray-800">The Story of Devkikrishna</h3>
+                        <div class="w-20 h-1 bg-primary"></div>
+                        <p class="text-gray-700 leading-relaxed">
+                            Devkikrishna has its roots deep in mythology and the symbolic idol is a rare one. The meeting place is also unique, the island of Chudamani, Chorao or Chodan now which was a dense forest once, where Krishna had gone hiding.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            Till date traces of the old Chodan temple are seen. Over a period of time the temple was shifted to Mayem against the advances of the Portuguese who were bent upon destroying each and every temple in the taluka of Tiswadi.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            Over a period of time when the Portuguese captured Bicholim taluka of which Mayem was a part looking at the safety of the idols, they were shifted to Marcela or Mashel via the kumbharjua canal in canoes.
+                        </p>
+                    </div>
+                    <div class="relative">
+                        <img src="{% static 'about/images/temple.jpg' %}" alt="Temple Interior" class="rounded-lg shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-lg shadow-xl">
+                            <p class="text-2xl font-bold">Est. 1800s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-gray-800 text-center mb-8">Room Booking</h3>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="POST" action="{% url 'about:book_room' %}" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700">Name</label>
+                        <input type="text" name="name" id="name" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700">Email</label>
+                        <input type="email" name="email" id="email" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="phone" class="block text-gray-700">Phone</label>
+                        <input type="text" name="phone" id="phone" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="room_type" class="block text-gray-700">Room Type</label>
+                        <select name="room_type" id="room_type" required class="border border-gray-300 p-2 w-full rounded">
+                            <option value="single">Single Room</option>
+                            <option value="double">Double Room</option>
+                            <option value="suite">Suite</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="check_in" class="block text-gray-700">Check-in Date</label>
+                        <input type="date" name="check_in" id="check_in" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="check_out" class="block text-gray-700">Check-out Date</label>
+                        <input type="date" name="check_out" id="check_out" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="guests" class="block text-gray-700">Number of Guests</label>
+                        <input type="number" name="guests" id="guests" required class="border border-gray-300 p-2 w-full rounded">
+                    </div>
+                    <div class="mb-4">
+                        <label for="special_requests" class="block text-gray-700">Special Requests</label>
+                        <textarea name="special_requests" id="special_requests" class="border border-gray-300 p-2 w-full rounded"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-full hover:bg-orange-600 transition duration-300 font-semibold">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">Temple Gallery</h3>
+                    <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg hover-grow">
+                        <img src="{% static 'about/images/gallery1.jpg' %}" alt="Temple Gallery 1" class="w-full h-64 object-cover transform transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+                            <p class="text-white text-lg font-semibold">Temple Architecture</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg hover-grow">
+                        <img src="{% static 'about/images/gallery2.jpg' %}" alt="Temple Gallery 2" class="w-full h-64 object-cover transform transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+                            <p class="text-white text-lg font-semibold">Sacred Rituals</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg hover-grow">
+                        <img src="{% static 'about/images/gallery3.jpg' %}" alt="Temple Gallery 3" class="w-full h-64 object-cover transform transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+                            <p class="text-white text-lg font-semibold">Temple Festivals</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">Contact Us</h3>
+                    <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
+                        <i class="fas fa-map-marker-alt text-4xl text-primary mb-4"></i>
+                        <h4 class="text-xl font-semibold mb-2">Location</h4>
+                        <p class="text-gray-600">Mayem, Bicholim, Goa</p>
+                    </div>
+                    <div class="text-center p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
+                        <i class="fas fa-phone text-4xl text-primary mb-4"></i>
+                        <h4 class="text-xl font-semibold mb-2">Phone</h4>
+                        <p class="text-gray-600">+91 XXXXXXXXXX</p>
+                    </div>
+                    <div class="text-center p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
+                        <i class="fas fa-envelope text-4xl text-primary mb-4"></i>
+                        <h4 class="text-xl font-semibold mb-2">Email</h4>
+                        <p class="text-gray-600">info@shreedevkikrishna.in</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">About Us</h4>
+                    <p class="text-gray-400">Shree Devkikrishna Temple is a historic temple with deep roots in mythology and cultural significance.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition duration-300">Gallery</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Shree Devkikrishna Temple. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'about/js/script.js' %}"></script>
+</body>
+</html>
